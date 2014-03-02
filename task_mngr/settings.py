@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,3 +89,11 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+try:
+    from settings_local import *
+except ImportError:
+    raise ImportWarning(
+        'settings_local.py not found. Run:\n'
+        'cp etc/settings_local.py.example task_mngr/settings_local.py'
+    )
