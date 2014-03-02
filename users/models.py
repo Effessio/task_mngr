@@ -18,10 +18,7 @@ class MyUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
     username = models.CharField(max_length=30, unique=True)
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
@@ -29,7 +26,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(null=True, blank=True, upload_to='user_images')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
     objects = MyUserManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
     def __unicode__(self):
         return self.username

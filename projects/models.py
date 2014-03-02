@@ -13,6 +13,7 @@ class Project(models.Model):
 
 
 class ProjectMembership(models.Model):
+
     class PROJECT_ROLE(object):
         MANAGER = 1
         DEVELOPER = 2
@@ -20,10 +21,10 @@ class ProjectMembership(models.Model):
         AUDITOR = 4
 
         ALL = (
-        (MANAGER, 'Manager'),
-        (DEVELOPER, 'Developer'),
-        (TESTER, 'Tester'),
-        (AUDITOR, 'Auditor'),
+            (MANAGER, 'Manager'),
+            (DEVELOPER, 'Developer'),
+            (TESTER, 'Tester'),
+            (AUDITOR, 'Auditor'),
         )
     member = models.ForeignKey(User)
     project = models.ForeignKey(Project)
@@ -31,6 +32,7 @@ class ProjectMembership(models.Model):
 
 
 class Task(models.Model):
+
     class TASK_TYPE(object):
         BUG = 1
         FEATURE = 2
@@ -38,10 +40,10 @@ class Task(models.Model):
         CONTAINER = 4
 
         ALL = (
-        (BUG, 'Bug'),
-        (FEATURE, 'Feature'),
-        (TASK, 'Task'),
-        (CONTAINER, 'Container'),
+            (BUG, 'Bug'),
+            (FEATURE, 'Feature'),
+            (TASK, 'Task'),
+            (CONTAINER, 'Container'),
         )
 
     project = models.ForeignKey(Project)
@@ -50,8 +52,8 @@ class Task(models.Model):
     created_at = models.DateTimeField('date created', auto_now_add=True)
     updated_at = models.DateTimeField('date updated', auto_now=True)
     due_date = models.DateTimeField('due date')
-    reporter = models.ManyToManyField(User, related_name="reported_tasks")
-    assigned = models.ManyToManyField(User, related_name="assigned_tasks")
+    reporter = models.ManyToManyField(User, related_name='reported_tasks')
+    assigned = models.ManyToManyField(User, related_name='assigned_tasks')
     task_type = models.IntegerField(choices=TASK_TYPE.ALL)
     parent_task = models.ForeignKey('self', null=True, blank=True)
 
@@ -60,22 +62,3 @@ class Comment(models.Model):
     user = models.ForeignKey(User)
     task = models.ForeignKey(Task)
     text = models.TextField()
-
-
-# Задача
-# project - проект в котором создана задача
-# title - заголовок
-# description - подробное описание
-# created_at - автозаполняется при создании
-# updated_at - автозаполняется при редактировании
-# due_date - дедлайн выполнения задачи
-# reporter - пользователь создавший задачу
-# assigned - пользователь которому назначена задача
-# task_type - (bug, feature, task, container)
-# parent_task - необязательное поле, ссылка на родительскую задачу
-#
-# parent_task заполняется только для задач с топом container
-# Комментарий
-# user
-# task
-# text
