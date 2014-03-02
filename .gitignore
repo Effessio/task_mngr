@@ -2,3 +2,5 @@
 *.sublime-workspace
 *.pyc
 .idea
+db.sqlite3
+diff.diff

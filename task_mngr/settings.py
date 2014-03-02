@@ -36,6 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'users',
+    'projects'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,6 +51,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'task_mngr.urls'
+
+AUTH_USER_MODEL = 'users.User'
 
 WSGI_APPLICATION = 'task_mngr.wsgi.application'
 
@@ -80,3 +85,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
