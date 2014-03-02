@@ -50,8 +50,8 @@ class Task(models.Model):
     created_at = models.DateTimeField('date created', auto_now_add=True)
     updated_at = models.DateTimeField('date updated', auto_now=True)
     due_date = models.DateTimeField('due date')
-    reporter = models.ManyToManyField(User, related_name="reported_tasks")
-    assigned = models.ManyToManyField(User, related_name="assigned_tasks")
+    reporter = models.ForeignKey(User, related_name="reported_tasks")
+    assigned = models.ForeignKey(User, related_name="assigned_tasks")
     task_type = models.IntegerField(choices=TASK_TYPE.ALL)
     parent_task = models.ForeignKey('self', null=True, blank=True)
 
