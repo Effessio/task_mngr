@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,3 +80,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+try:
+    from settings_local import *
+except ImportError:
+    raise ImportWarning(
+        'settings_local.py not found. Run:\n'
+        'cp etc/settings_local.py.example task_mngr/settings_local.py'
+    )
