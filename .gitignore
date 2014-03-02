@@ -3,4 +3,4 @@
 *.pyc
 .idea
 db.sqlite3
-diff.diff
+settings_local.py
