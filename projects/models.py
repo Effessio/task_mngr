@@ -11,6 +11,9 @@ class Project(models.Model):
     is_public = models.BooleanField(default=False)
     members = models.ManyToManyField(User, through='ProjectMembership')
 
+    def __unicode__(self):
+        return self.title
+
 
 class ProjectMembership(models.Model):
 
@@ -29,6 +32,9 @@ class ProjectMembership(models.Model):
     member = models.ForeignKey(User)
     project = models.ForeignKey(Project)
     role = models.IntegerField(choices=PROJECT_ROLE.ALL)
+
+    def __unicode__(self):
+        return u'{0} is {1} of {2}'.format(self.member, self.role, self.project)
 
 
 class Task(models.Model):
@@ -52,18 +58,19 @@ class Task(models.Model):
     created_at = models.DateTimeField('date created', auto_now_add=True)
     updated_at = models.DateTimeField('date updated', auto_now=True)
     due_date = models.DateTimeField('due date')
-<<<<<<< HEAD
     reporter = models.ForeignKey(User, related_name="reported_tasks")
     assigned = models.ForeignKey(User, related_name="assigned_tasks")
-=======
-    reporter = models.ManyToManyField(User, related_name='reported_tasks')
-    assigned = models.ManyToManyField(User, related_name='assigned_tasks')
->>>>>>> 604d655e6f3c1048ca17b67a83ed9ebea328be17
     task_type = models.IntegerField(choices=TASK_TYPE.ALL)
     parent_task = models.ForeignKey('self', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
 
 
 class Comment(models.Model):
     user = models.ForeignKey(User)
     task = models.ForeignKey(Task)
     text = models.TextField()
+
+    def __unicode__(self):
+        return self.text

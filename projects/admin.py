@@ -1,9 +1,29 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
-from users.models import User
+from projects.models import *
 
 
-class UserAdmin(admin.ModelAdmin):
-    fields = ['username', 'password', 'first_name', 'last_name', 'email']
+class ProjectAdmin(admin.ModelAdmin):
+    fields = ['title', 'is_public']
+
+class TaskAdmin(admin.ModelAdmin):
+    fields = ['project', 'title', 'description', 'due_date', 'reporter', 'assigned', 'task_type', 'parent_task']
 
 
-admin.site.register(User,UserAdmin)
+class CommentAdmin(admin.ModelAdmin):
+    fields = ['user', 'task', 'text']
+
+
+class ProjectMembershipAdmin(admin.ModelAdmin):
+    fields = ['member', 'project', 'role']
+
+
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(Task, TaskAdmin)
+admin.site.register(Comment, CommentAdmin)
+admin.site.register(ProjectMembership, ProjectMembershipAdmin)
+
+
+
+
+
