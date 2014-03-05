@@ -13,7 +13,7 @@ Install requirements
 Create settings_local.py
 ========================
 
-.. code-block:: bah
+.. code-block:: bash
 
     $ cp etc/settings_local.py.example task_mngr/settings_local.py
 
