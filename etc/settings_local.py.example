@@ -2,11 +2,11 @@
 
 DATABASES = {
     'default': {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME': 'mydatabase',
-        'USER': 'mydatabaseuser',
-        'PASSWORD': 'mypassword',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'task_mngr',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+        'PORT': '',
+        },
 }
