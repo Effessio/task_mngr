@@ -1,14 +1,28 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
-<head>
-    <title></title>
-</head>
-<body>
-    <form action="" method="post"> {% csrf_token %}
-        Имя пользователя: <input type="text" name="user_name"/>
-        Пароль: <input type="password" name="password"/>
-        <input type="submit" value="Войти">
-    </form>
+{% extends "users/auth_base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Вход на сайт
+{% endblock title %}
+
+{% block content %}
+<h2>Вход</h2>
+<p>Введите логин и пароль что бы войти</a>
+<form class="form-horizontal" action="." role="form" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" name="user_name" placeholder="Username">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </div>
+    </div>
+</form>
+{% endblock content %}
