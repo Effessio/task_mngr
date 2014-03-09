@@ -1,18 +1,49 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
-<head>
-    <title></title>
-</head>
-<body>
-    <form action="" method="post"> {% csrf_token %}
-        <p>Имя: <input type="text" name="first_name"/></p>
-        <p>Фамилия: <input type="text" name="last_name"/></p>
-        <p>Адрес электронной почты: <input type="text" name="e-mail"/></p>
-        <p>Имя пользователя: <input type="text" name="user_name"/></p>
-        <p></p>Пароль: <input type="password" name="password"/></p>
-        <p>Пароль еще раз: <input type="password" name="password2"/></p>
-        <p><input type="submit" value="Зарегистрировать нового пользователя"></p>
-    </form>
+{% extends "users/auth_base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Регистрация
+{% endblock title %}
+{% block content %}
+    <h2>Регистрация</h2>
+    <p>После заполнения формы вы будете перенаправлены на главную</p>
+
+    <form class="form-horizontal" action="." role="form" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" name="first_name" placeholder="Имя">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" name="last_name" placeholder="Фамилия">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" name="e-mail" placeholder="email">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" name="user_name" placeholder="имя пользователя">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="password" class="form-control" name="password" placeholder="Пароль">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <input type="password" class="form-control" name="password2" placeholder="Повторие пароль">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
