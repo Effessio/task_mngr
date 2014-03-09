@@ -1,8 +1,9 @@
-#-*- coding:utf-8 -*_
+#-*- coding: utf-8 -*-
+
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from users.models import User
-from validate_email import validate_email
+#from validate_email import validate_email
 
 
 def user_login(request):
@@ -33,7 +34,7 @@ def user_register(request):
             if User.objects.filter(username=user_name):
                 return HttpResponse('Такой пользователь уже существует')
             else:
-                if not validate_email(email) or User.objects.filter(email=email):
+                if User.objects.filter(email=email):
                     return HttpResponse('Почту нормально введи да!')
                 else:
                     user = User(username=user_name, password=password,
