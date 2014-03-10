@@ -34,7 +34,7 @@ class ProjectMembership(models.Model):
     role = models.IntegerField(choices=PROJECT_ROLE.ALL)
 
     def __unicode__(self):
-        return u'{0} is {1} of {2}'.format(self.member, self.role, self.project)
+        return u'{0} is {1} of {2}'.format(self.member_id, self.role, self.project_id)
 
 
 class Task(models.Model):

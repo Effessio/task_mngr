@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from projects.models import *
+from projects.models import Project, Task, Comment, ProjectMembership
 
 
 class ProjectAdmin(admin.ModelAdmin):

@@ -3,21 +3,26 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from users.models import User
+from users.forms import LoginForm, RegisterForm
 #from validate_email import validate_email
 
 
 def user_login(request):
     if request.method == 'POST':
-        user_name = request.POST['user_name']
-        password = request.POST['password']
-        user = authenticate(username=user_name, password=password)
-        if user is None:
-            return HttpResponse('bad')
-        else:
-            login(request, user)
-            return HttpResponse('good')
+        form = LoginForm(request.POST)
+        print form, 'form'
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is None:
+                return HttpResponse('bad')
+            else:
+                login(request, user)
+                return HttpResponse('good')
     else:
-        return render(request, 'users/login.html')
+        form = LoginForm()
+        return render(request, 'users/login.html', {'form': form})
 
 
 def user_register(request):
