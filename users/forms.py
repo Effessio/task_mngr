@@ -48,5 +48,4 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError(u'Введенные пароли не совпадают')
         if len(password1) < 5:
             raise forms.ValidationError(u'Пароль слишком маленький. Увеличте до 5 символов')
-
         return cleaned_data

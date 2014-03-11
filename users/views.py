@@ -4,7 +4,6 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from users.models import User
 from users.forms import LoginForm, RegisterForm
-#from validate_email import validate_email
 
 
 def user_login(request):
