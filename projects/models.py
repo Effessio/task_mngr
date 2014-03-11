@@ -52,6 +52,22 @@ class Task(models.Model):
             (CONTAINER, 'Container'),
         )
 
+    class TASK_STATUS(object):
+        OPEN = 1
+        RESOLVED = 2
+        IN_TESTING = 3
+        REOPENED = 4
+        DONE = 5
+
+        ALL = (
+            (OPEN, 'Open'),
+            (RESOLVED, 'Resolved'),
+            (IN_TESTING, 'In testing'),
+            (REOPENED, 'Reopened'),
+            (DONE, 'Done'),
+
+        )
+
     project = models.ForeignKey(Project)
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -62,6 +78,7 @@ class Task(models.Model):
     assigned = models.ForeignKey(User, related_name="assigned_tasks")
     task_type = models.IntegerField(choices=TASK_TYPE.ALL)
     parent_task = models.ForeignKey('self', null=True, blank=True)
+    task_status = models.IntegerField(choices=TASK_STATUS.ALL)
 
     def __unicode__(self):
         return self.title

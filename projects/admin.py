@@ -7,7 +7,8 @@ class ProjectAdmin(admin.ModelAdmin):
     fields = ['title', 'is_public']
 
 class TaskAdmin(admin.ModelAdmin):
-    fields = ['project', 'title', 'description', 'due_date', 'reporter', 'assigned', 'task_type', 'parent_task']
+    fields = ['project', 'title', 'description', 'due_date', 'reporter',
+              'assigned', 'task_type', 'parent_task', 'task_status']
 
 
 class CommentAdmin(admin.ModelAdmin):

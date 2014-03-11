@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+{{form.error}}
 <h2>Вход</h2>
 <p>Введите логин и пароль чтобы войти</p>
 <form class="form-horizontal" action="." role="form" method="post">
@@ -25,8 +26,8 @@
         </div>
     </div>
 </form>
-
-
-
-
+{% for items in form.non_field_errors %}
+<p class="text-danger">{{ items }}</p>
+{% endfor %}
+<p class="text-danger">{{ error_message }}</p>
 {% endblock content %}

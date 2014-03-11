@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from users.models import User
 from users.forms import LoginForm, RegisterForm
@@ -10,16 +10,20 @@ from users.forms import LoginForm, RegisterForm
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        print form, 'form'
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is None:
-                return HttpResponse('bad')
+                return render(request,
+                              'users/login.html',
+                              {'form': form, 'error_message': 'Пользователя с таким логином и паролем не существует'})
             else:
                 login(request, user)
-                return HttpResponse('good')
+                return HttpResponseRedirect('../../')  # How is it better to make redirect to main page??
+        else:
+            print
+            return render(request, 'users/login.html', {'form': form})
     else:
         form = LoginForm()
         return render(request, 'users/login.html', {'form': form})
