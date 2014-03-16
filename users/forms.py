@@ -28,8 +28,8 @@ class RegisterForm(forms.Form):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
                                                                   'placeholder': 'Password again'}))
 
     def clean(self):
@@ -38,14 +38,14 @@ class RegisterForm(forms.Form):
         first_name = cleaned_data.get('first_name')
         last_name = cleaned_data.get('last_name')
         email = cleaned_data.get('email')
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
         if User.objects.filter(username=username):
             raise forms.ValidationError(u'Пользователь с таким именем уже существует')
         if User.objects.filter(email=email):
             raise forms.ValidationError(u'Пользователь с таким адресом электронной почты уже существует')
-        if password1 != password2:
+        if password != confirm_password:
             raise forms.ValidationError(u'Введенные пароли не совпадают')
-        if len(password1) < 5:
+        if len(password) < 5:
             raise forms.ValidationError(u'Пароль слишком маленький. Увеличте до 5 символов')
         return cleaned_data

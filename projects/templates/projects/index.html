@@ -4,15 +4,19 @@
     <div class="container">
         <div class="col-xs-4">
             <p><strong>Список Проектов</strong></p>
-            {% for item in projects%}
-                <p>{{item.title}}</p>
+            <ul>
+            {% for project in projects%}
+                <li><a href="{% url 'project_page' project.id %}">{{project.title}}</a></li>
             {% endfor%}
+            </ul>
         </div>
         <div class="col-xs-4">
             <p><strong>Список задач</strong></p>
+            <ul>
             {% for item in tasks%}
-                <p>{{item.title}},   {{item.due_date}}</p>
+                <li>{{item.title}},   {{item.due_date}}</li>
             {% endfor%}
+            </ul>
         </div>
     </div>
 
