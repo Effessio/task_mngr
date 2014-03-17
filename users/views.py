@@ -16,12 +16,11 @@ def user_login(request):
             if user is None:
                 return render(request,
                               'users/login.html',
-                              {'form': form, 'error_message': 'Пользователя с таким логином и паролем не существует'})
+                              {'form': form, 'error_message': u'Пользователя с таким логином и паролем не существует'})
             else:
                 login(request, user)
-                return HttpResponseRedirect('../../')  # How is it better to make redirect to main page??
+                return HttpResponseRedirect('/')
         else:
-            print
             return render(request, 'users/login.html', {'form': form})
     else:
         form = LoginForm()
@@ -36,9 +35,9 @@ def user_register(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
+            password = form.cleaned_data['password']
             User.objects.create_user(username, password, first_name, last_name, email)
-            return HttpResponseRedirect('../../')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'users/register.html', {'form': form})
     else:

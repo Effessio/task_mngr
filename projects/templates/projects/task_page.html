@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+    <div class="col-xs-4">
+        <p>{{task.title}}</p>
+        <p>{{task.description}}</p>
+        <table class="table table-bordered">
+            {% for comment in comment_list %}
+                <tr>
+                    <td>{{comment.user.username}}</td>
+                    <td>{{comment.text}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

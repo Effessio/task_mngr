@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <div class="container">
+        <div class="col-xs-6">
+            <p><strong>Список Задач для проекта</strong></p>
+            <table class="table">
+                {% for task in task_list %}
+                    <tr>
+                        <td><a href="{%url 'task_page' task.id %}">{{ task.title }}</a></td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.task_type }}</td>
+                        <td>{{ task.due_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+       <div class="col-xs-4">
+           <p><strong>Участники проекта</strong></p>
+           <table class="table">
+           {% for member in members_list %}
+               <tr>
+                   <td>{{ member.username }}</td>
+                   <td>{{ member.projectmembership_role }}</td>
+               </tr>
+           {% endfor %}
+            </table>
+       </div>
+    </div>
+
+{% endblock %}
