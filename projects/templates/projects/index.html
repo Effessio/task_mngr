@@ -1,14 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+
     <div class="container">
         <div class="col-xs-4">
-            <p><strong>Список Проектов</strong></p>
-            <ul>
-            {% for project in projects%}
-                <li><a href="{% url 'project_page' project.id %}">{{project.title}}</a></li>
-            {% endfor%}
-            </ul>
+
+                    <p><strong>Список Проектов</strong></p>
+                    {% if projects.has_previous %}
+                        <a href="?page={{ projects.previous_page_number }}">previous</a>
+                    {% endif %}
+                        Page {{ projects.number }} of {{ projects.paginator.num_pages }}.
+
+                    {% if projects.has_next %}
+                        <a href="?page={{ projects.next_page_number }}">next</a>
+                    {% endif %}
+                <ul style="margin-top:20px">
+                {% for project in projects %}
+                    <li><a href="{% url 'project_page' project.id %}">{{project.title}}</a></li>
+                {% endfor %}
+                </ul>
         </div>
         <div class="col-xs-4">
             <p><strong>Список задач</strong></p>

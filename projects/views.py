@@ -1,14 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .models import Project, Task, User, Comment
 
 
 @login_required()
 def index(request):
     user = request.user
-    result_projects = Project.objects.filter(projectmembership__member_id=user.id).order_by('title')[:10]
+    projects = Project.objects.filter(projectmembership__member_id=user.id).order_by('title')
+    paginator = Paginator(projects, 5)
+    page = request.GET.get('page')
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+    except EmptyPage:
+        projects = paginator.page(paginator.num_pages)
     result_task_list = Task.objects.filter(assigned_id=user.id).order_by('due_date')[:5]
-    return render(request, 'projects/index.html', {'projects': result_projects, 'tasks':result_task_list})
+    return render(request, 'projects/index.html', {'projects': projects, 'tasks': result_task_list})
 
 
 @login_required()
