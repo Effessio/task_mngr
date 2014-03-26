@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+
+
    <div class="container">
         <div class="col-xs-6">
             <p><strong>Список Задач для проекта</strong></p>
+            {% if task_list.has_previous %}
+                        <a href="?page={{ task_list.previous_page_number }}">previous</a>
+                    {% endif %}
+                        Page {{ task_list.number }} of {{ task_list.paginator.num_pages }}.
+
+                    {% if task_list.has_next %}
+                        <a href="?page={{ task_list.next_page_number }}">next</a>
+                    {% endif %}
             <table class="table">
                 {% for task in task_list %}
                     <tr>
