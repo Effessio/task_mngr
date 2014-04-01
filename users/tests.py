@@ -3,6 +3,7 @@ from django.test import TestCase
 from .models import User
 from .forms import RegisterForm
 from django.core.urlresolvers import reverse
+from django.test.client import Client
 from .views import user_register
 
 
@@ -57,7 +58,9 @@ class ViewTests(RegisterTests):
 
     def test_auth_user_registers_new_as_is(self):
         User.objects.create_user('xxx', '1234567', 'xxx', 'xxx', 'xxx@xxx.com')
-        self.client.post(reverse('user_login'), {'username': 'xxx', 'password': '1234567'})
+        # self.client.post(reverse('user_login'), {'username': 'xxx', 'password': '1234567'})
+        self.client.login(username='xxx', password='1234567')
+        self.assertIn('_auth_user_id', self.client.session)
         self.client.post(reverse('user_register'), self.get_form_data())
         self.assertEqual(User.objects.count(), 2)
 
