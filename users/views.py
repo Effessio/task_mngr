@@ -28,18 +28,22 @@ def user_login(request):
 
 
 def user_register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            User.objects.create_user(username, password, first_name, last_name, email)
-            return HttpResponseRedirect('/')
-        else:
-            return render(request, 'users/register.html', {'form': form})
+    user = request.user
+    if user.is_authenticated():
+        return HttpResponseRedirect('/')
     else:
-        form = RegisterForm()
-        return render(request, 'users/register.html', {'form': form})
+        if request.method == 'POST':
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password']
+                User.objects.create_user(username, password, first_name, last_name, email)
+                return HttpResponseRedirect('/')
+            else:
+                return render(request, 'users/register.html', {'form': form})
+        else:
+            form = RegisterForm()
+            return render(request, 'users/register.html', {'form': form})

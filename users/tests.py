@@ -7,7 +7,7 @@ from django.test.client import Client
 from .views import user_register
 
 
-class RegisterTests(TestCase):
+class RegisterTestsMixin(object):
     def get_form_data(self, **kwargs):
         data = {
             'username': 'foo',
@@ -24,7 +24,7 @@ class RegisterTests(TestCase):
         abstract = True
 
 
-class FormTests(RegisterTests):
+class FormTests(RegisterTestsMixin, TestCase):
     def test_register_form_is_valid(self):
         form = RegisterForm(data=self.get_form_data())
         self.assertEqual(form.is_valid(), True)
@@ -49,28 +49,23 @@ class FormTests(RegisterTests):
         self.assertEqual(form.errors['__all__'][0], u'Пользователь с таким адресом электронной почты уже существует')
 
 
-class ViewTests(RegisterTests):
+class ViewTests(RegisterTestsMixin, TestCase):
     def test_valid_form_user_add(self):
         self.client.post(reverse('user_register'), self.get_form_data())
         self.assertEqual(User.objects.count(), 1)
         user = User.objects.get()
         self.assertEqual(user.username, 'foo')
 
-    def test_auth_user_registers_new_as_is(self):
-        User.objects.create_user('xxx', '1234567', 'xxx', 'xxx', 'xxx@xxx.com')
-        # self.client.post(reverse('user_login'), {'username': 'xxx', 'password': '1234567'})
+    def test_valid_dada_not_auth_user(self):
         self.client.login(username='xxx', password='1234567')
-        self.assertIn('_auth_user_id', self.client.session)
         self.client.post(reverse('user_register'), self.get_form_data())
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(User.objects.count(), 1)
 
-    # def test_auth_user_registers_new_to_be(self):
-    #     user = User(username='xxx', password='1234567')
-    #     user.save()
-    #     self.client.post(reverse('user_login'), {'username': 'foo', 'password': '1234567'})
-    #     responce = self.client.post(reverse('user_register'), self.get_form_data())
-    #
-    #     self.assertEqual(User.objects.count(), 2)
+    def test_auth_user_can_not_register(self):
+        User.objects.create_user('xxx', '1234567', 'xxx', 'xxx', 'xxx@xxx.com')
+        self.client.login(username='xxx', password='1234567')
+        response = self.client.get(reverse('user_register'))
+        self.assertEqual(response.status_code, 302)
 
 
 

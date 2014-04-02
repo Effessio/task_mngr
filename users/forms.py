@@ -22,21 +22,23 @@ class LoginForm(forms.Form):
         return cleaned_data
 
 
-
-class RegisterForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+class RegisterForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
                                                                   'placeholder': 'Password again'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
+        widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+                   'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}),
+                   'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}),
+                   'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}),
+                   'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+                   }
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
         username = cleaned_data.get('username')
-        first_name = cleaned_data.get('first_name')
-        last_name = cleaned_data.get('last_name')
         email = cleaned_data.get('email')
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
